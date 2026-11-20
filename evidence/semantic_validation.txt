@@ -1,0 +1,32 @@
+Independent TAC / pseudo-assembly check
+TAC expected x=32, print=[32], return=32
+Assembly actual x=32, print=[32], return=32
+Registers observed: R0, R1, R2
+Genuine spill events: 3; reload events: 3
+Spilled variable(s): t1, t2, t3
+Reloaded variable(s): t1, t2, t3
+Initially stored inputs: ordinary loads=2; spills=0; reloads=0
+Generated assembly:
+LOAD R0, a
+LOAD R1, b
+ADD R2, R0, R1
+LOAD R0, c
+LOAD R1, d
+STORE R2, t1    ; spill
+ADD R2, R0, R1
+LOAD R0, e
+LOAD R1, f
+STORE R2, t2    ; spill
+ADD R2, R0, R1
+LOAD R0, t1    ; reload
+LOAD R1, t2    ; reload
+STORE R2, t3    ; spill
+MUL R2, R0, R1
+LOAD R0, t3    ; reload
+ADD R1, R0, R2
+PRINT R1
+STORE R1, x    ; flush
+STORE R2, t4    ; flush
+LOAD R0, x
+RET R0
+HALT
